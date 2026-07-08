@@ -47,6 +47,7 @@ public class UserController {
 			throws Exception {
 		log.info("authentication call from the user " + emailId);
 		UserDetails details = userService.authenticate(emailId);
+		userService.updateUserLoggedOn(details.id());
 		return new ResponseEntity<UserDetails>(details, HttpStatus.OK);
 
 	}

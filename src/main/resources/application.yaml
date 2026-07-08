@@ -30,6 +30,7 @@ server:
 logging:
     level:
         root: info
-        "[org.hibernate.sql]": info
+        "[org.hibernate.sql]": debug
+        "[org.hibernate.type.descriptor.sql.BasicBinder]": debug
         "[com.exp.userservice]": debug
         "[com.zaxxer.hikari]": warn
