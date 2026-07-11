@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,11 +55,11 @@ public class AdminController {
 	}
 
 	@PatchMapping("/users/{id}")
-	ResponseEntity<UserUpateResponse> updateUser(@PathVariable UUID id, @RequestBody UserUpateRequest req)
+	ResponseEntity<UserUpateResponse> updateUser(@PathVariable UUID id, @RequestBody UserUpateRequest req, @RequestHeader(name = "X-Username") String updatedBy)
 			throws UserNotFoundException {
 		log.info("Are we getting the data " + req.toString());
 
-		return new ResponseEntity<UserUpateResponse>(userService.updateUser(id, req), HttpStatus.OK);
+		return new ResponseEntity<UserUpateResponse>(userService.updateUser(id, req , updatedBy), HttpStatus.OK);
 	}
 
 }
