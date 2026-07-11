@@ -97,7 +97,7 @@ public class UserService {
 		info.setTimezone(userReq.timezone());
 		info.setGender(userReq.gender());
 		info.setStatus(UserStatus.ACTIVE);
-		info.setCreatedby("admin");
+		info.setCreatedby(userReq.emailId());
 		info.setCreatedOn(OffsetDateTime.now(Clock.systemUTC()));
 
 		return info;
@@ -151,7 +151,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public UserUpateResponse updateUser(UUID id, UserUpateRequest req) throws UserNotFoundException {
+	public UserUpateResponse updateUser(UUID id, UserUpateRequest req, String updatedBy) throws UserNotFoundException {
 
 		User user = userRepository.findById(id)
 				.orElseThrow(() -> new UserNotFoundException("User not found in the downstream"));
@@ -187,6 +187,8 @@ public class UserService {
 		if (StringUtils.hasText(req.timezone())) {
 			user.getUserInfo().setTimezone(req.timezone());
 		}
+		user.getUserInfo().setUpdatedby(updatedBy);
+		user.getUserInfo().setUpdatedOn(OffsetDateTime.now(Clock.systemUTC()));
 
 		User result = userRepository.saveAndFlush(user);
 
