@@ -117,7 +117,8 @@ public class UserService {
 			createdT = dateConverter(createdto);
 		}
 
-		return userRepository.searchUser(username, firstname, lastname, createdF, createdT, PageRequest.of(pageNo, 2));
+		return userRepository.searchUser(username, firstname, lastname, createdF, createdT,
+				PageRequest.of(pageNo, 6, org.springframework.data.domain.Sort.by("emailId").ascending()));
 
 	}
 
